@@ -24,6 +24,11 @@ public class Duke {
         return finalString;
     }
 
+    private static String[] userInputStringToArray(String userInput) {
+        String[] userInputArray = userInput.split(" ");
+        return userInputArray;
+    }
+
     private static ArrayList<Task> addTaskToList(ArrayList<Task> arrayList, Task task) {
         ArrayList<Task> taskList = new ArrayList<Task>();
         taskList = arrayList;
@@ -35,12 +40,21 @@ public class Duke {
         return taskList;
     }
 
-    private static ArrayList<Task> setTaskDone(ArrayList<Task> arrayList, int number) {
+    private static ArrayList<Task> setTaskDone(ArrayList<Task> arrayList, int number) throws DukeException {
         ArrayList<Task> taskList = new ArrayList<Task>();
         taskList = arrayList;
-        taskList.get(number-1).setIsDone(true);          // set the task as done
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(taskList.get(number-1).toString());
+        try {
+            if(number > taskList.size() || number < 1) {
+                throw new DukeException("The selected task does not exist.");
+            }
+            taskList.get(number-1).setIsDone(true);          // set the task as done
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(taskList.get(number-1).toString());
+            return taskList;
+        }
+        catch(DukeException errorMessage) {
+            System.err.println(errorMessage.toString());
+        }
         return taskList;
     }
 
@@ -52,48 +66,68 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         printWelcomeMessage();
 
         ArrayList<Task> taskList = new ArrayList<Task>();
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
-        String userInputFirstWord = userInput.split(" ")[0];;   // get first word from userInput
+        String[] userInputArray = userInputStringToArray(userInput);
+        String userInputFirstWord = userInputArray[0];   // get first word from userInput
 
         while (true) {
             String taskName = removeFirstWordFromString(userInput);   // remove first word from userInput
 
-            if(userInputFirstWord.equals("todo")) {
-                Todo userTodo = new Todo(taskName);
-                taskList = addTaskToList(taskList, userTodo);
+            try {
+                if (userInputFirstWord.equals("todo")) {
+                    if(userInputArray.length == 1) {
+                        throw new DukeException("The description of a todo cannot be empty.");
+                    }
+                    Todo userTodo = new Todo(taskName);
+                    taskList = addTaskToList(taskList, userTodo);
 
-            } else if (userInputFirstWord.equals("deadline")) {
-                String userDeadlineTask = taskName.split("/by")[0];     // userInputTask stores user entered task (before /by)
-                String userDeadlineDate = taskName.split("/by")[1];     // userInputDate stores user entered date (after /by)
-                Deadline userDeadline = new Deadline(userDeadlineTask, userDeadlineDate);
-                taskList = addTaskToList(taskList, userDeadline);
+                } else if (userInputFirstWord.equals("deadline")) {
+                    if(userInputArray.length == 1) {
+                        throw new DukeException("The description of a todo cannot be empty.");
+                    }
+                    String userDeadlineTask = taskName.split("/by")[0];     // userInputTask stores user entered task (before /by)
+                    String userDeadlineDate = taskName.split("/by")[1];     // userInputDate stores user entered date (after /by)
+                    Deadline userDeadline = new Deadline(userDeadlineTask, userDeadlineDate);
+                    taskList = addTaskToList(taskList, userDeadline);
 
-            } else if (userInputFirstWord.equals("event")) {
-                String userEventTask = taskName.split("/at")[0];     // userEventTask stores user entered task (before /at)
-                String userEventDate = taskName.split("/at")[1];     // userEventDate stores user entered date (after /at)
-                Event userEvent = new Event(userEventTask, userEventDate);
-                taskList = addTaskToList(taskList, userEvent);
+                } else if (userInputFirstWord.equals("event")) {
+                    if(userInputArray.length == 1) {
+                        throw new DukeException("The description of a event cannot be empty.");
+                    }
+                    String userEventTask = taskName.split("/at")[0];     // userEventTask stores user entered task (before /at)
+                    String userEventDate = taskName.split("/at")[1];     // userEventDate stores user entered date (after /at)
+                    Event userEvent = new Event(userEventTask, userEventDate);
+                    taskList = addTaskToList(taskList, userEvent);
 
-            } else if (userInputFirstWord.equals("done")) {
-                int userInputNumber = Integer.parseInt(taskName.split(" ")[0]);    // get the number that user entered
-                taskList = setTaskDone(taskList, userInputNumber);
+                } else if (userInputFirstWord.equals("done")) {
+                    if(userInputArray.length == 1) {
+                        throw new DukeException("done must be followed by a number.");
+                    }
+                    int userInputNumber = Integer.parseInt(taskName.split(" ")[0]);    // get the number that user entered
+                    taskList = setTaskDone(taskList, userInputNumber);
 
-            } else if (userInputFirstWord.equals("list")) {
-                printTaskList(taskList);
+                } else if (userInputFirstWord.equals("list")) {
+                    printTaskList(taskList);
 
-            } else if (userInputFirstWord.equals("bye")) {
-                  System.out.println("Bye. Hope to see you again soon!");
-                  System.exit(0);
+                } else if (userInputFirstWord.equals("bye")) {
+                    System.out.println("Bye. Hope to see you again soon!");
+                    System.exit(0);
+                } else {
+                    throw new DukeException("I'm sorry, but I don't know what that means :-(");
+                }
+            } catch(DukeException errorMessage) {
+                System.err.println(errorMessage.toString());
             }
 
             System.out.println("\n");
             userInput = input.nextLine();
-            userInputFirstWord = userInput.split(" ")[0];    // get the first word of user input
+            userInputArray = userInputStringToArray(userInput);
+            userInputFirstWord = userInputArray[0];    // get the first word of user input
         }
     }
 }
