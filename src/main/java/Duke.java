@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;  // Import the Scanner class
 import java.util.ArrayList; // import the ArrayList class
 
@@ -75,6 +76,14 @@ public class Duke {
         String[] userInputArray = userInputStringToArray(userInput);
         String userInputFirstWord = userInputArray[0];   // get first word from userInput
 
+        Save save = new Save("/data/duke.txt");
+        try {
+            taskList = save.readTaskList();     // restore saved taskList
+        } catch (IOException errorMessage){
+            System.out.println(errorMessage);
+        }
+
+
         while (true) {
             String taskName = removeFirstWordFromString(userInput);   // remove first word from userInput
 
@@ -85,6 +94,7 @@ public class Duke {
                     }
                     Todo userTodo = new Todo(taskName);
                     taskList = addTaskToList(taskList, userTodo);
+                    save.saveTaskList(taskList);
 
                 } else if (userInputFirstWord.equals("deadline")) {
                     if(userInputArray.length == 1) {
@@ -94,6 +104,7 @@ public class Duke {
                     String userDeadlineDate = taskName.split("/by")[1];     // userInputDate stores user entered date (after /by)
                     Deadline userDeadline = new Deadline(userDeadlineTask, userDeadlineDate);
                     taskList = addTaskToList(taskList, userDeadline);
+                    save.saveTaskList(taskList);
 
                 } else if (userInputFirstWord.equals("event")) {
                     if(userInputArray.length == 1) {
@@ -103,6 +114,7 @@ public class Duke {
                     String userEventDate = taskName.split("/at")[1];     // userEventDate stores user entered date (after /at)
                     Event userEvent = new Event(userEventTask, userEventDate);
                     taskList = addTaskToList(taskList, userEvent);
+                    save.saveTaskList(taskList);
 
                 } else if (userInputFirstWord.equals("done")) {
                     if(userInputArray.length == 1) {
@@ -110,6 +122,7 @@ public class Duke {
                     }
                     int userInputNumber = Integer.parseInt(taskName.split(" ")[0]);    // get the number that user entered
                     taskList = setTaskDone(taskList, userInputNumber);
+                    save.saveTaskList(taskList);
 
                 } else if (userInputFirstWord.equals("list")) {
                     printTaskList(taskList);
@@ -122,6 +135,8 @@ public class Duke {
                 }
             } catch(DukeException errorMessage) {
                 System.err.println(errorMessage.toString());
+            } catch(IOException errorMessage) {
+                System.err.println(errorMessage);
             }
 
             System.out.println("\n");
