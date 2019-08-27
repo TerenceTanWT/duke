@@ -1,7 +1,5 @@
 import java.util.ArrayList; // import the ArrayList class
 import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
@@ -60,7 +58,7 @@ public class Save {
         }
     }
 
-    public ArrayList<Task> readTaskList() throws IOException {
+    public ArrayList<Task> readTaskList() throws IOException, DukeException {
         ArrayList<Task> taskList = new ArrayList<Task>();
         try {
             FileInputStream file = new FileInputStream(new File(path));
@@ -76,16 +74,29 @@ public class Save {
             if(!file.createNewFile()) {
                 System.out.println("Unable to create file " + path + "...");
                 System.out.println(errorMessage);
+                throw new DukeException("Error creating save file.");
             }
 
         } catch (IOException errorMessage) {
             System.out.println("Error reading file from " + path);
             System.out.println(errorMessage);
+            throw new DukeException("Error reading save file.");
 
         } catch (ClassNotFoundException errorMessage) {
             System.out.println(errorMessage);
         }
-        
+
         return taskList;
+    }
+
+    public ArrayList<Task> restoreTaskList(ArrayList<Task> arrayList) throws IOException, DukeException {
+        try {
+            ArrayList<Task> taskList = readTaskList();
+            return taskList;
+
+        } catch (IOException errorMessage){
+            System.out.println(errorMessage);
+            throw new DukeException("Error restoring from save file. Please delete /data/duke.txt and relaunch.");
+        }
     }
 }
