@@ -1,6 +1,12 @@
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;  // Import the Scanner class
 import java.util.ArrayList; // import the ArrayList class
+import java.text.ParseException;
 
 public class Duke {
     private static void printWelcomeMessage() {
@@ -100,21 +106,44 @@ public class Duke {
                     if(userInputArray.length == 1) {
                         throw new DukeException("The description of a todo cannot be empty.");
                     }
-                    String userDeadlineTask = taskName.split("/by")[0];     // userInputTask stores user entered task (before /by)
-                    String userDeadlineDate = taskName.split("/by")[1];     // userInputDate stores user entered date (after /by)
-                    Deadline userDeadline = new Deadline(userDeadlineTask, userDeadlineDate);
-                    taskList = addTaskToList(taskList, userDeadline);
-                    save.saveTaskList(taskList);
+                    try {
+                        String userDeadlineTask = taskName.split("/by")[0];     // userInputTask stores user entered task (before /by)
+                        String userDeadlineDateString = taskName.split("/by")[1];     // userInputDate stores user entered date (after /by)
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
+                        Date userDeadlineDate = dateFormat.parse(userDeadlineDateString);
+                        Deadline userDeadline = new Deadline(userDeadlineTask, userDeadlineDate);
+                        taskList = addTaskToList(taskList, userDeadline);
+                        save.saveTaskList(taskList);
+                    } catch(ParseException errorMessage) {
+                        System.out.println("Incorrect format. Please try:");
+                        System.out.println("<task> /by <dd/MM/yyyy HHmm>");
+                        System.out.println("E.g. Celebrate birthday /by 12/11/2019 1800");
+                    }
 
                 } else if (userInputFirstWord.equals("event")) {
                     if(userInputArray.length == 1) {
                         throw new DukeException("The description of a event cannot be empty.");
                     }
-                    String userEventTask = taskName.split("/at")[0];     // userEventTask stores user entered task (before /at)
-                    String userEventDate = taskName.split("/at")[1];     // userEventDate stores user entered date (after /at)
-                    Event userEvent = new Event(userEventTask, userEventDate);
-                    taskList = addTaskToList(taskList, userEvent);
-                    save.saveTaskList(taskList);
+                    try {
+                        String userEventTask = taskName.split("/at")[0];     // userEventTask stores user entered task (before /at)
+                        String userEventDateString = taskName.split("/at")[1];     // userEventDate stores user entered date (after /at)
+                        if(userEventDateString.indexOf("-") < 0) {
+                            throw new ParseException("incorrect format",1);
+                        }
+                        String userEventDateFromString = userEventDateString.split("-")[0];   // stores user input from date
+                        String userEventDateToString = userEventDateString.split("-")[1];   // stores user input to date
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
+                        Date userEventDateFrom = dateFormat.parse(userEventDateFromString);
+                        Date userEventDateTo = dateFormat.parse(userEventDateToString);
+                        Event userEvent = new Event(userEventTask, userEventDateFrom, userEventDateTo);
+                        taskList = addTaskToList(taskList, userEvent);
+                        save.saveTaskList(taskList);
+                    } catch(ParseException errorMessage) {
+                        System.out.println("Incorrect format. Please try:");
+                        System.out.println("<task> /at <dd/MM/yyyy HHmm> - <dd/MM/yyyy HHmm");
+                        System.out.println("E.g. Celebrate birthday /at 12/11/2019 1800 - 12/11/2019 2200");
+                    }
+
 
                 } else if (userInputFirstWord.equals("done")) {
                     if(userInputArray.length == 1) {
