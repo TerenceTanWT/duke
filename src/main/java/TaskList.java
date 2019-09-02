@@ -31,6 +31,24 @@ public class TaskList {
         return taskList;
     }
 
+    public static ArrayList<Task> deleteTask(ArrayList<Task> arrayList, int number) throws DukeException {
+        ArrayList<Task> taskList = new ArrayList<Task>();
+        taskList = arrayList;
+        try {
+            if(number > taskList.size() || number < 1) {
+                throw new DukeException("The selected task does not exist.");
+            }
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(taskList.get(number-1).toString());
+            taskList.remove(number-1);          // delete task from task list
+            return taskList;
+        }
+        catch(DukeException errorMessage) {
+            System.err.println(errorMessage.toString());
+        }
+        return taskList;
+    }
+
     public static void printTaskList(ArrayList<Task> arrayList) {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < arrayList.size(); i++) {

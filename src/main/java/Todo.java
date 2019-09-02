@@ -14,7 +14,7 @@ public class Todo extends Task {
 
     public static String getTaskName(String myString) {
         String taskName = myString;
-        Duke.removeFirstWordFromString(taskName);
+        taskName = Duke.removeFirstWordFromString(taskName);
         return taskName;
     }
 

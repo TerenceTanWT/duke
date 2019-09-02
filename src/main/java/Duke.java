@@ -44,6 +44,13 @@ public class Duke {
         Save save = new Save("/data/duke.txt");
         taskList = save.restoreTaskList(taskList);
 
+        /*
+        String testString = "todo hello world!";
+        testString = removeFirstWordFromString(testString);
+        System.out.println(testString);
+        System.exit(0);
+        */
+
         while (true) {
             try {
                 if (userInputFirstWord.equals("todo")) {
@@ -67,6 +74,12 @@ public class Duke {
                     Date eventDateTo = Event.getEventDateTo(userInput);
                     Event userEvent = new Event(eventTask, eventDateFrom, eventDateTo);
                     taskList = TaskList.addTaskToList(taskList, userEvent);
+                    save.saveTaskList(taskList);
+
+                } else if (userInputFirstWord.equals("delete")) {
+                    Delete.checkInputError(userInput);
+                    int userInputNumber = Delete.getDeleteNumber(userInput);    // get the number that user entered
+                    taskList = TaskList.deleteTask(taskList, userInputNumber);
                     save.saveTaskList(taskList);
 
                 } else if (userInputFirstWord.equals("done")) {
