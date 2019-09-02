@@ -28,7 +28,7 @@ public class Event extends Task {
 
     public static String getTaskName(String myString) {
         String taskName = myString;
-        Duke.removeFirstWordFromString(taskName);
+        taskName = Duke.removeFirstWordFromString(taskName);
         taskName = taskName.split("/at")[0];     // gets user entered task (before /by)
         return taskName;
     }
