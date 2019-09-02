@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 
 public class Save {
 
-    private String path;
+    private static String path;
     private String directory;
     private String filename;
     private String projectDirectory;
@@ -28,7 +28,7 @@ public class Save {
         return directory;
     }
 
-    public void saveTaskList(ArrayList<Task> arrayList) throws IOException {
+    public static void saveTaskList(ArrayList<Task> arrayList) throws IOException {
         ArrayList<Task> taskList = new ArrayList<Task>();
         taskList = arrayList;
         int tryAgain = 0;
@@ -58,7 +58,7 @@ public class Save {
         }
     }
 
-    public ArrayList<Task> readTaskList() throws IOException, DukeException {
+    public static ArrayList<Task> readTaskList() throws IOException, DukeException {
         ArrayList<Task> taskList = new ArrayList<Task>();
         try {
             FileInputStream file = new FileInputStream(new File(path));
@@ -89,7 +89,7 @@ public class Save {
         return taskList;
     }
 
-    public ArrayList<Task> restoreTaskList(ArrayList<Task> arrayList) throws IOException, DukeException {
+    public static ArrayList<Task> restoreTaskList(ArrayList<Task> arrayList) throws IOException, DukeException {
         try {
             ArrayList<Task> taskList = readTaskList();
             return taskList;
