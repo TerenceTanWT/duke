@@ -42,7 +42,7 @@ public class Duke {
 
         // restore taskList from previous session
         Save save = new Save("/data/duke.txt");
-        taskList = save.restoreTaskList(taskList);
+        taskList = Save.restoreTaskList(taskList);
 
         while (true) {
             try {
@@ -74,6 +74,11 @@ public class Duke {
                     int userInputNumber = Done.getDoneNumber(userInput);    // get the number that user entered
                     taskList = TaskList.setTaskDone(taskList, userInputNumber);
                     save.saveTaskList(taskList);
+
+                } else if (userInputFirstWord.equals("find")) {
+                    Find.checkInputError(userInput);
+                    String keyword = Find.getKeyword(userInput);
+                    TaskList.findTask(taskList, keyword);
 
                 } else if (userInputFirstWord.equals("list")) {
                     TaskList.printTaskList(taskList);
