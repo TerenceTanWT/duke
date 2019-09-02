@@ -1,0 +1,10 @@
+todo go to a book store
+todo borrow a book
+deadline return book /by 30/08/2019 1200
+event project meeting /at 02/09/2019 1600 - 02/09/2019 1700
+done 1
+done 2
+delete 1
+list
+bye
+
