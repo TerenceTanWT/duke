@@ -13,7 +13,7 @@ public class Deadline extends Task {
     }
 
     public static void checkInputError(String myString) throws DukeException {
-        String[] userInputArray = Duke.userInputStringToArray(myString);
+        String[] userInputArray = Parser.userInputStringToArray(myString);
 
         if(userInputArray.length <= 1) {
             throw new DukeException("The description of deadline cannot be empty.");
@@ -25,7 +25,7 @@ public class Deadline extends Task {
 
     public static String getTaskName(String myString) {
         String taskName = myString;
-        taskName = Duke.removeFirstWordFromString(taskName);
+        taskName = Parser.removeFirstWordFromString(taskName);
         taskName = taskName.split("/by")[0];     // gets user entered task (before /by)
         return taskName;
     }
