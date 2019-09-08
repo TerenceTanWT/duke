@@ -1,3 +1,5 @@
+package duke;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -67,6 +69,19 @@ public class TaskList implements Serializable {
             int index = i + 1;
             System.out.println(index + "." + taskList.get(i).toString());
         }
+    }
+
+    public boolean isDone(int number) throws DukeException {
+        try {
+            if (number > taskList.size() || number < 1) {
+                throw new DukeException("The selected task does not exist.");
+            }
+            return taskList.get(number-1).getIsDone();
+
+        } catch (DukeException errorMessage) {
+            System.err.println(errorMessage.toString());
+        }
+        return false;
     }
 
     public ArrayList<Task> toArrayList() {

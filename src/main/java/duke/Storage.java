@@ -1,20 +1,17 @@
+package duke;
+
+import java.io.*;
 import java.util.ArrayList; // import the ArrayList class
-import java.io.File;
-import java.io.IOException;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
-public class Save {
 
-    private static String path;
+public class Storage {
+
+    private String path;
     private String directory;
     private String filename;
     private String projectDirectory;
 
-    public Save(String path) {
+    public Storage(String path) {
         this.path = System.getProperty("user.dir") + path;
         filename = path.substring(path.lastIndexOf("/") + 1);
         directory = path.substring(0, path.lastIndexOf("/"));
@@ -28,15 +25,14 @@ public class Save {
         return directory;
     }
 
-    public static void saveTaskList(ArrayList<Task> arrayList) throws IOException {
-        ArrayList<Task> taskList = new ArrayList<Task>();
-        taskList = arrayList;
+    public void saveTaskList(TaskList taskList) throws IOException {
         int tryAgain = 0;
         while(tryAgain < 2) {
             try {
                 FileOutputStream file = new FileOutputStream(new File(path));
                 ObjectOutputStream object = new ObjectOutputStream(file);
-                object.writeObject(taskList);
+                object.writeObject(taskList.toArrayList());
+                //object.writeObject(taskList);
                 object.close();
                 file.close();
                 tryAgain = 2;
@@ -58,21 +54,32 @@ public class Save {
         }
     }
 
-    public static ArrayList<Task> readTaskList() throws IOException, DukeException {
-        ArrayList<Task> taskList = new ArrayList<Task>();
+    public TaskList restoreTaskList(TaskList taskList) throws IOException, DukeException {
+        ArrayList<Task> arrayList = new ArrayList<Task>();
         try {
             FileInputStream file = new FileInputStream(new File(path));
             ObjectInputStream object = new ObjectInputStream(file);
-            taskList = (ArrayList<Task>)object.readObject();
+            arrayList = (ArrayList<Task>)object.readObject();
+            TaskList newTaskList = new TaskList(arrayList);
+            //Duke.TaskList newTaskList = (Duke.TaskList) object.readObject();
             object.close();
             file.close();
-            return taskList;
+            return newTaskList;
 
         } catch(FileNotFoundException errorMessage) {
             File file = new File(path);
             file.getParentFile().mkdirs();          // create directory. This function will not create if already exist.
             if(!file.createNewFile()) {
                 System.out.println("Unable to create file " + path + "...");
+                System.out.println(errorMessage);
+                throw new DukeException("Error creating save file.");
+            }
+
+        } catch (EOFException errorMessage) {
+            File file = new File(path);
+            file.delete();
+            if(!file.createNewFile()) {
+                System.out.println("Save file is corrupted and unable to create new file " + path + "...");
                 System.out.println(errorMessage);
                 throw new DukeException("Error creating save file.");
             }
@@ -87,16 +94,5 @@ public class Save {
         }
 
         return taskList;
-    }
-
-    public static ArrayList<Task> restoreTaskList(ArrayList<Task> arrayList) throws IOException, DukeException {
-        try {
-            ArrayList<Task> taskList = readTaskList();
-            return taskList;
-
-        } catch (IOException errorMessage){
-            System.out.println(errorMessage);
-            throw new DukeException("Error restoring from save file. Please delete /data/duke.txt and relaunch.");
-        }
     }
 }

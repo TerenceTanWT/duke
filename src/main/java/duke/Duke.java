@@ -1,3 +1,5 @@
+package duke;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;  // Import the Scanner class
@@ -20,6 +22,7 @@ public class Duke {
         while (true) {
             try {
                 if (userInputFirstWord.equals("todo")) {
+                    Todo.checkInputError(userInput);
                     String taskName = Todo.getTaskName(userInput);
                     Todo userTodo = new Todo(taskName);
                     taskList.addTaskToList(userTodo);
@@ -71,10 +74,10 @@ public class Duke {
 
                 }
             } catch(DukeException errorMessage) {
-                if(errorMessage.getMessage().equals("Deadline invalid date")) {
+                if(errorMessage.getMessage().equals("Duke.Deadline invalid date")) {
                     ui.printDeadlineFormat();
 
-                } else if (errorMessage.getMessage().equals("Event invalid date")) {
+                } else if (errorMessage.getMessage().equals("Duke.Event invalid date")) {
                     ui.printEventFormat();
 
                 }
