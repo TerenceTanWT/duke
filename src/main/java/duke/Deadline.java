@@ -1,3 +1,5 @@
+package duke;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +21,7 @@ public class Deadline extends Task {
             throw new DukeException("The description of deadline cannot be empty.");
 
         } else if(!myString.contains("/by")) {
-            throw new DukeException("Deadline invalid date");
+            throw new DukeException("Duke.Deadline invalid date");
         }
     }
 
@@ -27,6 +29,7 @@ public class Deadline extends Task {
         String taskName = myString;
         taskName = Parser.removeFirstWordFromString(taskName);
         taskName = taskName.split("/by")[0];     // gets user entered task (before /by)
+        taskName = taskName.strip();
         return taskName;
     }
 
@@ -38,7 +41,7 @@ public class Deadline extends Task {
             return deadlineDate;
 
         } catch(ParseException errorMessage) {
-            throw new DukeException("Deadline invalid date");
+            throw new DukeException("Duke.Deadline invalid date");
         }
     }
 

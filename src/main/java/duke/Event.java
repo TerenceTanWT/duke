@@ -1,3 +1,5 @@
+package duke;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +23,7 @@ public class Event extends Task {
             throw new DukeException("The description of event cannot be empty.");
 
         } else if(!myString.contains("-") || !myString.contains("/at")) {
-            throw new DukeException("Event invalid date");
+            throw new DukeException("Duke.Event invalid date");
 
         }
     }
@@ -30,6 +32,7 @@ public class Event extends Task {
         String taskName = myString;
         taskName = Parser.removeFirstWordFromString(taskName);
         taskName = taskName.split("/at")[0];     // gets user entered task (before /by)
+        taskName = taskName.strip();
         return taskName;
     }
 
@@ -42,7 +45,7 @@ public class Event extends Task {
             return eventDate;
 
         } catch(ParseException errorMessage) {
-            throw new DukeException("Event invalid date");
+            throw new DukeException("Duke.Event invalid date");
         }
     }
 
@@ -55,7 +58,7 @@ public class Event extends Task {
             return eventDate;
 
         } catch(ParseException errorMessage) {
-            throw new DukeException("Event invalid date");
+            throw new DukeException("Duke.Event invalid date");
         }
     }
 

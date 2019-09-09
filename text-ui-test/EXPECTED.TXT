@@ -18,12 +18,12 @@ Now you have 2 tasks in the list.
 
 
 Got it. I've added this task: 
-[D][✘] return book  (by: 30/08/2019 1200)
+[D][✘] return book (by: 30/08/2019 1200)
 Now you have 3 tasks in the list.
 
 
 Got it. I've added this task: 
-[E][✘] project meeting  (at: 02/09/2019 1600 - 02/09/2019 1700)
+[E][✘] project meeting (at: 02/09/2019 1600 - 02/09/2019 1700)
 Now you have 4 tasks in the list.
 
 
@@ -41,13 +41,13 @@ Noted. I've removed this task:
 
 Here are the tasks in your list:
 1.[T][✓] borrow a book
-2.[D][✘] return book  (by: 30/08/2019 1200)
-3.[E][✘] project meeting  (at: 02/09/2019 1600 - 02/09/2019 1700)
+2.[D][✘] return book (by: 30/08/2019 1200)
+3.[E][✘] project meeting (at: 02/09/2019 1600 - 02/09/2019 1700)
 
 
 Here are the matching tasks in your list:
 1.[T][✓] borrow a book
-2.[D][✘] return book  (by: 30/08/2019 1200)
+2.[D][✘] return book (by: 30/08/2019 1200)
 
 
 Bye. Hope to see you again soon!

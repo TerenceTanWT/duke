@@ -1,3 +1,5 @@
+package duke;
+
 import java.io.Serializable;
 
 public class Task implements Serializable {
@@ -19,6 +21,10 @@ public class Task implements Serializable {
 
     public void setIsDone(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    public boolean getIsDone() {
+        return isDone;
     }
 
     public String toString() {

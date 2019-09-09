@@ -1,9 +1,11 @@
+package duke;
+
 public class Find {
 
     public static void checkInputError(String myString) throws DukeException {
         String[] userInputArray = Parser.userInputStringToArray(myString);
         if(userInputArray.length <= 1) {
-            throw new DukeException("Find must be followed by a string from the list.");
+            throw new DukeException("Duke.Find must be followed by a string from the list.");
         }
     }
 
