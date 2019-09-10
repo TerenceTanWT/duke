@@ -1,5 +1,3 @@
-package duke;
-
 import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
@@ -32,7 +30,7 @@ public class DeadlineTest {
         String taskName = "return book";
         Date taskDate = dateFormat.parse("12/11/2019 1200");
         Deadline userDeadline = new Deadline(taskName, taskDate);
-        assertEquals("[D][✘] return book (by: 12/11/2019 1200)", userDeadline.toString());
+        assertEquals("[D][\u2718] return book (by: 12/11/2019 1200)", userDeadline.toString());
     }
 
     @Test

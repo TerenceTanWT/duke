@@ -1,5 +1,4 @@
-package duke;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +8,7 @@ public class ParserTest {
     public void testGetFirstWordFromString() {
         String test = "todo lets go to the zoo";
         String expected = "todo";
-        assertEquals(expected, Parser.getFirstWordFromString(test));
+        Assertions.assertEquals(expected, Parser.getFirstWordFromString(test));
     }
 
     @Test

@@ -1,5 +1,3 @@
-package duke;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;  // Import the Scanner class

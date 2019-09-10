@@ -1,5 +1,3 @@
-package duke;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,11 +7,22 @@ public class Deadline extends Task {
 
     private Date by;
 
+    /**
+     *
+     * @param description Description of the deadline task
+     * @param by Date to complete the task (dd/MM/yyyy HHmm)
+     */
     public Deadline(String description, Date by) {
         super(description);
         this.by = by;
     }
 
+    /**
+     * Checks if string contains empty description or date. Returns nothing if no error.
+     *
+     * @param myString String to be checked.
+     * @throws DukeException If string contains empty description or invalid date format.
+     */
     public static void checkInputError(String myString) throws DukeException {
         String[] userInputArray = Parser.userInputStringToArray(myString);
 
@@ -25,6 +34,12 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Returns deadline name from string.
+     *
+     * @param myString String to be checked.
+     * @return The deadline name.
+     */
     public static String getTaskName(String myString) {
         String taskName = myString;
         taskName = Parser.removeFirstWordFromString(taskName);
@@ -33,6 +48,13 @@ public class Deadline extends Task {
         return taskName;
     }
 
+    /**
+     * Returns deadline date from string.
+     *
+     * @param myString String to be checked.
+     * @return The deadline date.
+     * @throws DukeException If date format is incorrect.
+     */
     public static Date getTaskDate(String myString) throws DukeException {
         try {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");
@@ -45,6 +67,11 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Returns the variable values of the deadline object.
+     *
+     * @return The variable values of the deadline object.
+     */
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HHmm");

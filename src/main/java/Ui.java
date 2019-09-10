@@ -1,7 +1,8 @@
-package duke;
-
 public class Ui {
 
+    /**
+     * Prints welcome message
+     */
     public void printWelcomeMessage() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -15,12 +16,18 @@ public class Ui {
         System.out.println("What can I do for you?\n");
     }
 
+    /**
+     * Prints the correct deadline format.
+     */
     public void printDeadlineFormat() {
         System.out.println("Incorrect format. Please try:");
         System.out.println("deadline <task> /by <dd/MM/yyyy HHmm>");
         System.out.println("E.g. deadline Celebrate birthday /by 12/11/2019 1800");
     }
 
+    /**
+     * Prints the correct event format.
+     */
     public void printEventFormat() {
         System.out.println("Incorrect format. Please try:");
         System.out.println("event <task> /at <dd/MM/yyyy HHmm> - <dd/MM/yyyy HHmm");

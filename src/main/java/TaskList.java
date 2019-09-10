@@ -1,5 +1,3 @@
-package duke;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,14 +9,29 @@ public class TaskList implements Serializable {
 
     }
 
+    /**
+     * Creates an empty task list, or populate the task list with objects from an array list.
+     *
+     * @param taskList Array list with task objects (optional)
+     */
     public TaskList(ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
 
+    /**
+     * Returns size of the task list.
+     *
+     * @return The size of task list.
+     */
     public int size() {
         return taskList.size();
     }
 
+    /**
+     * Adds a task object into the task list.
+     *
+     * @param task Task object (todo, deadline, or event).
+     */
     public void addTaskToList(Task task) {
         taskList.add(task);
         System.out.println("Got it. I've added this task: ");
@@ -26,6 +39,12 @@ public class TaskList implements Serializable {
         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
     }
 
+    /**
+     * Mark a task in the task list as done.
+     *
+     * @param number The task number of the task to be marked as done.
+     * @throws DukeException If task number does not exist in the task list.
+     */
     public void setTaskDone(int number) throws DukeException {
         try {
             if(number > taskList.size() || number < 1) {
@@ -40,6 +59,12 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Delete a task from the task list.
+     *
+     * @param number The task number of the task to be deleted from the task list.
+     * @throws DukeException If task number does not exist in the task list.
+     */
     public void deleteTask(int number) throws DukeException {
         try {
             if (number > taskList.size() || number < 1) {
@@ -54,7 +79,12 @@ public class TaskList implements Serializable {
         }
     }
 
-    public void findTask(String keyword) throws DukeException {
+    /**
+     * Prints task from the task list that matches the keyword.
+     *
+     * @param keyword A string to look for in the task list.
+     */
+    public void findTask(String keyword) {
         System.out.println("Here are the matching tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
             if (taskList.get(i).getDescription().contains(keyword)) {
@@ -63,6 +93,9 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Prints all the task from the task list.
+     */
     public void printTaskList() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
@@ -71,6 +104,13 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Returns true if the task has already been marked as done.
+     *
+     * @param number The task number of the task to be checked.
+     * @return True if the task has already been marked as done.
+     * @throws DukeException If task number does not exist in the task list.
+     */
     public boolean isDone(int number) throws DukeException {
         try {
             if (number > taskList.size() || number < 1) {

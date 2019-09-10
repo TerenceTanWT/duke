@@ -1,5 +1,3 @@
-package duke;
-
 import java.io.*;
 import java.util.ArrayList; // import the ArrayList class
 
@@ -11,20 +9,40 @@ public class Storage {
     private String filename;
     private String projectDirectory;
 
+    /**
+     *
+     * @param path The path to store the save file or to load the save file from. Path starts from the project root.
+     */
     public Storage(String path) {
         this.path = System.getProperty("user.dir") + path;
         filename = path.substring(path.lastIndexOf("/") + 1);
         directory = path.substring(0, path.lastIndexOf("/"));
     }
 
+    /**
+     * Returns the save file name.
+     *
+     * @return The save file name.
+     */
     public String getFileName(){
         return filename;
     }
 
+    /**
+     * Returns the directory of the save file.
+     *
+     * @return The directory of the save file.
+     */
     public String getDirectoryName(){
         return directory;
     }
 
+    /**
+     * Save the task list object to a file which is specified when creating the Storage object.
+     *
+     * @param taskList Task list object to be saved.
+     * @throws IOException When unable to read or write to the save file possibly due to permission error or file corruption.
+     */
     public void saveTaskList(TaskList taskList) throws IOException {
         int tryAgain = 0;
         while(tryAgain < 2) {
@@ -54,6 +72,14 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns task list object which contains task objects loaded from the save file.
+     *
+     * @param taskList Task list object to load the saved task list.
+     * @return A task list object containing task objects loaded from save file.
+     * @throws IOException When unable to read or write to the save file possibly due to permission error or file corruption.
+     * @throws DukeException When unable to create or read save file possibly due to permission error or file corruption.
+     */
     public TaskList restoreTaskList(TaskList taskList) throws IOException, DukeException {
         ArrayList<Task> arrayList = new ArrayList<Task>();
         try {

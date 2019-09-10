@@ -1,5 +1,3 @@
-package duke;
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +13,7 @@ public class TodoTest {
     @Test
     public void addTodoTest() {
         Todo userTodo = new Todo("go to the book store");
-        assertEquals("[T][✘] go to the book store", userTodo.toString());
+        assertEquals("[T][\u2718] go to the book store", userTodo.toString());
     }
 
     @Test

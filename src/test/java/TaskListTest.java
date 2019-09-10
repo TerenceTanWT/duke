@@ -1,5 +1,3 @@
-package duke;
-
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -45,10 +43,10 @@ public class TaskListTest {
     @Test
     public void printTaskListTest() {
         String expected = "Here are the tasks in your list:\n" +
-                "1.[T][✘] go to a book store\n" +
-                "2.[T][✘] leave the book store and go to school\n" +
-                "3.[D][✘] return book (by: 12/11/2019 1200)\n" +
-                "4.[E][✘] project meeting (at: 12/11/2019 1300 - 12/11/2019 1700)\n";
+                "1.[T][\u2718] go to a book store\n" +
+                "2.[T][\u2718] leave the book store and go to school\n" +
+                "3.[D][\u2718] return book (by: 12/11/2019 1200)\n" +
+                "4.[E][\u2718] project meeting (at: 12/11/2019 1300 - 12/11/2019 1700)\n";
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         taskList.printTaskList();
@@ -58,8 +56,8 @@ public class TaskListTest {
     @Test
     public void findTaskTest() throws DukeException {
         String expected = "Here are the matching tasks in your list:\n" +
-                "1.[T][✘] go to a book store\n" +
-                "2.[T][✘] leave the book store and go to school\n";
+                "1.[T][\u2718] go to a book store\n" +
+                "2.[T][\u2718] leave the book store and go to school\n";
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         taskList.findTask("book store");

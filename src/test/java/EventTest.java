@@ -1,5 +1,3 @@
-package duke;
-
 import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
@@ -41,7 +39,7 @@ public class EventTest {
         Date eventDateFrom = dateFormat.parse("12/11/2019 1200");
         Date eventDateTo = dateFormat.parse("12/11/2019 1700");
         Event userEvent = new Event(taskName, eventDateFrom, eventDateTo);
-        assertEquals("[E][✘] project meeting (at: 12/11/2019 1200 - 12/11/2019 1700)", userEvent.toString());
+        assertEquals("[E][\u2718] project meeting (at: 12/11/2019 1200 - 12/11/2019 1700)", userEvent.toString());
     }
 
     @Test
